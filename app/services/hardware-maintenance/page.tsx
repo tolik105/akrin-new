@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { PenToolIcon as Tool, Zap, Clock, Shield, Laptop, Smartphone, Activity, DollarSign, Users } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'Hardware Maintenance Japan | Computer Repair & Support | Akrin',
+  description: 'Professional hardware maintenance services in Japan including preventive maintenance, emergency repairs, hardware upgrades, diagnostics, and data protection. Keep your systems running smoothly.',
+  keywords: [
+    'hardware maintenance Japan',
+    'computer repair Tokyo',
+    'preventive maintenance IT',
+    'emergency hardware repair',
+    'hardware upgrades Japan',
+    'system diagnostics Tokyo',
+    'data protection hardware',
+    'IT equipment maintenance',
+    'server maintenance Japan',
+    'hardware support services'
+  ],
+  path: '/services/hardware-maintenance'
+})
 
 export default function HardwareMaintenancePage() {
   const { t } = useTranslation('common')
@@ -61,8 +79,22 @@ export default function HardwareMaintenancePage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'Hardware Maintenance Services',
+    description: 'Professional hardware maintenance services including preventive maintenance, emergency repairs, hardware upgrades, diagnostics, and data protection for businesses in Japan.',
+    serviceType: 'Hardware Maintenance Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.hardwareMaintenance.title')}
         subtitle={t('servicePages.hardwareMaintenance.subtitle')}
@@ -132,6 +164,7 @@ export default function HardwareMaintenancePage() {
         ctaText={t('servicePages.hardwareMaintenance.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }
