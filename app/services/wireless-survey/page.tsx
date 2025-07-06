@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Wifi, BarChart, Zap, Shield, Smartphone, Settings, CheckCircle, FileSearch, Database, LineChart, FileText, AlertTriangle } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'Wireless Survey Japan | WiFi Site Survey & Network Analysis | Akrin',
+  description: 'Professional wireless survey services in Japan including WiFi site surveys, coverage analysis, performance testing, capacity planning, and network optimization. Optimize your wireless infrastructure.',
+  keywords: [
+    'wireless survey Japan',
+    'WiFi site survey Tokyo',
+    'wireless network analysis',
+    'WiFi coverage survey Japan',
+    'wireless performance testing',
+    'WiFi capacity planning',
+    'wireless security assessment',
+    'network optimization Japan',
+    'WiFi heatmap survey',
+    'wireless infrastructure Japan'
+  ],
+  path: '/services/wireless-survey'
+})
 
 export default function WirelessSurveyPage() {
   const { t } = useTranslation('common')
@@ -99,8 +117,22 @@ export default function WirelessSurveyPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'Wireless Survey Services',
+    description: 'Professional wireless survey services including WiFi site surveys, coverage analysis, performance testing, capacity planning, and network optimization for businesses in Japan.',
+    serviceType: 'Wireless Survey Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.wirelessSurvey.title')}
         subtitle={t('servicePages.wirelessSurvey.subtitle')}
@@ -216,6 +248,7 @@ export default function WirelessSurveyPage() {
         ctaText={t('servicePages.wirelessSurvey.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }
