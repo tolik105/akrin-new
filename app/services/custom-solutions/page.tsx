@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Code, Database, Cloud, Lock, Zap, BarChart, Search, PenTool, Wrench, Rocket } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'Custom IT Solutions Japan | Software Development & Integration | Akrin',
+  description: 'Custom IT solutions and software development in Japan including web applications, API development, system integration, cybersecurity, automation, and data analytics. Tailored technology solutions.',
+  keywords: [
+    'custom IT solutions Japan',
+    'software development Tokyo',
+    'web application development',
+    'API development Japan',
+    'system integration Tokyo',
+    'business automation Japan',
+    'data analytics solutions',
+    'custom software Japan',
+    'IT solution development',
+    'enterprise software Tokyo'
+  ],
+  path: '/services/custom-solutions'
+})
 
 export default function CustomSolutionsPage() {
   const { t } = useTranslation('common')
@@ -66,8 +84,22 @@ export default function CustomSolutionsPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'Custom IT Solutions',
+    description: 'Custom IT solutions and software development including web applications, API development, system integration, cybersecurity, automation, and data analytics for businesses in Japan.',
+    serviceType: 'Custom IT Solutions',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.customSolutions.title')}
         subtitle={t('servicePages.customSolutions.subtitle')}
@@ -137,6 +169,7 @@ export default function CustomSolutionsPage() {
         ctaText={t('servicePages.customSolutions.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }
