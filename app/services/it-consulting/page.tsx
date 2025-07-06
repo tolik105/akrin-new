@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Lightbulb, TrendingUp, Target, Users, Puzzle, BarChart, Brain, Layers, Award } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'IT Consulting Services Japan | Strategic IT Planning | Akrin',
+  description: 'Expert IT consulting services in Japan including IT strategy, digital transformation, budget optimization, vendor management, and project management. Strategic IT guidance for your business.',
+  keywords: [
+    'IT consulting Japan',
+    'IT strategy Tokyo',
+    'digital transformation Japan',
+    'IT budget optimization',
+    'vendor management Japan',
+    'IT project management',
+    'technology consulting Tokyo',
+    'enterprise IT strategy',
+    'IT architecture consulting',
+    'business technology consulting'
+  ],
+  path: '/services/it-consulting'
+})
 
 export default function ITConsultingPage() {
   const { t } = useTranslation('common')
@@ -61,8 +79,22 @@ export default function ITConsultingPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'IT Consulting Services',
+    description: 'Expert IT consulting services including IT strategy, digital transformation, budget optimization, vendor management, and project management for businesses in Japan.',
+    serviceType: 'IT Consulting Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.itConsulting.title')}
         subtitle={t('servicePages.itConsulting.subtitle')}
@@ -132,6 +164,7 @@ export default function ITConsultingPage() {
         ctaText={t('servicePages.itConsulting.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

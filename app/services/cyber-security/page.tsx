@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Shield, Lock, Eye, AlertTriangle, FileCheck, Zap, ShieldCheck, Search, Clock } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'Cybersecurity Services Japan | Advanced Threat Protection | Akrin',
+  description: 'Advanced cybersecurity services in Japan including security assessments, penetration testing, threat monitoring, compliance management, and incident response. Protect your business from cyber threats.',
+  keywords: [
+    'cybersecurity Japan',
+    'cyber security Tokyo',
+    'penetration testing Japan',
+    'security assessment Tokyo',
+    'threat monitoring Japan',
+    'compliance management cybersecurity',
+    'incident response Japan',
+    'data encryption services',
+    'cyber threat protection',
+    'enterprise cybersecurity Japan'
+  ],
+  path: '/services/cyber-security'
+})
 
 export default function CyberSecurityPage() {
   const { t } = useTranslation('common')
@@ -61,8 +79,22 @@ export default function CyberSecurityPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'Cybersecurity Services',
+    description: 'Advanced cybersecurity services including security assessments, penetration testing, threat monitoring, compliance management, and incident response for businesses in Japan.',
+    serviceType: 'Cybersecurity Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.cyberSecurity.title')}
         subtitle={t('servicePages.cyberSecurity.subtitle')}
@@ -131,6 +163,7 @@ export default function CyberSecurityPage() {
         ctaText={t('servicePages.cyberSecurity.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }
