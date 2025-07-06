@@ -19,8 +19,14 @@ export function RecaptchaV3({ onVerify, action = 'submit' }: RecaptchaV3Props) {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
   const executeRecaptcha = useCallback(async () => {
-    if (!window.grecaptcha || !siteKey) {
-      console.error('reCAPTCHA not loaded or site key missing')
+    if (!siteKey || siteKey === '') {
+      console.warn('reCAPTCHA site key not configured - skipping verification')
+      onVerify('mock-token-for-development')
+      return
+    }
+    
+    if (!window.grecaptcha) {
+      console.error('reCAPTCHA not loaded')
       return
     }
 
@@ -40,8 +46,12 @@ export function RecaptchaV3({ onVerify, action = 'submit' }: RecaptchaV3Props) {
     }
   }, [executeRecaptcha])
 
-  if (!siteKey) {
-    return <div className="text-red-500 text-sm">reCAPTCHA not configured</div>
+  if (!siteKey || siteKey === '') {
+    return (
+      <div className="text-yellow-600 text-sm">
+        reCAPTCHA not configured - using development mode
+      </div>
+    )
   }
 
   return (
