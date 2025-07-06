@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Database, BarChart, Search, Clock, DollarSign, Shield, TrendingUp, PiggyBank, Target } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'IT Asset Management Japan | Asset Tracking & Optimization | Akrin',
+  description: 'Comprehensive IT asset management services in Japan including asset tracking, performance monitoring, lifecycle management, cost optimization, and compliance reporting. Optimize your IT investments.',
+  keywords: [
+    'IT asset management Japan',
+    'asset tracking Tokyo',
+    'IT inventory management',
+    'asset lifecycle management',
+    'IT cost optimization Japan',
+    'compliance reporting IT',
+    'asset discovery services',
+    'performance monitoring Japan',
+    'IT asset optimization',
+    'enterprise asset management'
+  ],
+  path: '/services/asset-management'
+})
 
 export default function AssetManagementPage() {
   const { t } = useTranslation('common')
@@ -61,8 +79,22 @@ export default function AssetManagementPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'IT Asset Management Services',
+    description: 'Comprehensive IT asset management services including asset tracking, performance monitoring, lifecycle management, cost optimization, and compliance reporting for businesses in Japan.',
+    serviceType: 'IT Asset Management Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.assetManagement.title')}
         subtitle={t('servicePages.assetManagement.subtitle')}
@@ -131,6 +163,7 @@ export default function AssetManagementPage() {
         ctaText={t('servicePages.assetManagement.cta.button')}
         variant="gradient"
       />
-    </main>
+      </main>
+    </>
   )
 }

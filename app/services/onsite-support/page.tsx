@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Truck, Users, Briefcase, Clock, CheckCircle, UserPlus, Wrench, Shield } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'Onsite IT Support Japan | Field Service & Technical Support | Akrin',
+  description: 'Professional onsite IT support services in Japan including field technicians, emergency response, hardware installation, system troubleshooting, and user training. Expert support at your location.',
+  keywords: [
+    'onsite IT support Japan',
+    'field service Tokyo',
+    'onsite technicians Japan',
+    'emergency IT response',
+    'hardware installation onsite',
+    'system troubleshooting Japan',
+    'user training IT',
+    'preventive maintenance onsite',
+    'IT field support Tokyo',
+    'onsite computer support'
+  ],
+  path: '/services/onsite-support'
+})
 
 export default function OnsiteSupportPage() {
   const { t } = useTranslation('common')
@@ -56,8 +74,22 @@ export default function OnsiteSupportPage() {
     }
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'Onsite IT Support Services',
+    description: 'Professional onsite IT support services including field technicians, emergency response, hardware installation, system troubleshooting, and user training for businesses in Japan.',
+    serviceType: 'Onsite IT Support Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.onsiteSupport.title')}
         subtitle={t('servicePages.onsiteSupport.subtitle')}
@@ -127,6 +159,7 @@ export default function OnsiteSupportPage() {
         ctaText={t('servicePages.onsiteSupport.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

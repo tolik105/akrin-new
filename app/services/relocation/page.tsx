@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { TruckIcon, PackageCheck, Network, Monitor, Clock, ShieldCheck, CheckCircle, FileSearch, ClipboardList, Play, Headphones } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'IT Relocation Services Japan | Office Moving & Equipment Transport | Akrin',
+  description: 'Professional IT relocation services in Japan including equipment packing, secure transport, network setup, reinstallation, and minimal downtime office moves. Expert IT moving services.',
+  keywords: [
+    'IT relocation Japan',
+    'office moving Tokyo',
+    'IT equipment transport',
+    'network relocation Japan',
+    'server moving Tokyo',
+    'IT office relocation',
+    'equipment packing Japan',
+    'business relocation IT',
+    'office move services Tokyo',
+    'IT infrastructure relocation'
+  ],
+  path: '/services/relocation'
+})
 
 export default function RelocationServicesPage() {
   const { t } = useTranslation('common')
@@ -99,8 +117,22 @@ export default function RelocationServicesPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'IT Relocation Services',
+    description: 'Professional IT relocation services including equipment packing, secure transport, network setup, reinstallation, and minimal downtime office moves for businesses in Japan.',
+    serviceType: 'IT Relocation Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.relocation.title')}
         subtitle={t('servicePages.relocation.subtitle')}
@@ -198,6 +230,7 @@ export default function RelocationServicesPage() {
         ctaText={t('servicePages.relocation.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

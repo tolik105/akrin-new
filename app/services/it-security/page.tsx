@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Icons } from "@/components/icons"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'IT Security Services Japan | Cybersecurity Solutions | Akrin',
+  description: 'Comprehensive IT security and cybersecurity services in Japan. Network security, data encryption, threat detection, compliance, and incident response. Protect your business with Akrin.',
+  keywords: [
+    'IT security Japan',
+    'cybersecurity services Tokyo',
+    'network security solutions',
+    'data encryption Japan',
+    'threat detection monitoring',
+    'security compliance Japan',
+    'incident response services',
+    'enterprise security solutions',
+    'cyber threat protection',
+    'information security consulting'
+  ],
+  path: '/services/it-security'
+})
 
 export default function ITSecurityPage() {
   const { t } = useTranslation('common')
@@ -61,8 +79,22 @@ export default function ITSecurityPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'IT Security Services',
+    description: 'Comprehensive IT security and cybersecurity services including network security, data encryption, threat detection, compliance, and incident response for businesses in Japan.',
+    serviceType: 'IT Security Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.itSecurity.title')}
         subtitle={t('servicePages.itSecurity.subtitle')}
@@ -132,6 +164,7 @@ export default function ITSecurityPage() {
         ctaText={t('servicePages.itSecurity.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

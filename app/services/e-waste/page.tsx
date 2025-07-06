@@ -1,5 +1,5 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceProcessCard } from "@/components/service-process-card"
@@ -10,6 +10,24 @@ import Image from "next/image"
 import Link from "next/link"
 import { useTranslation } from "react-i18next"
 import { Button } from "@/components/ui/button"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'E-Waste Management Japan | Electronic Waste Recycling & Disposal | Akrin',
+  description: 'Professional e-waste management and electronic waste recycling in Japan including secure data destruction, certified disposal, compliance reporting, and environmental responsibility.',
+  keywords: [
+    'e-waste management Japan',
+    'electronic waste recycling Tokyo',
+    'IT equipment disposal Japan',
+    'secure data destruction',
+    'electronic recycling Tokyo',
+    'e-waste disposal Japan',
+    'IT asset disposal',
+    'electronic waste compliance',
+    'green IT disposal Japan',
+    'certified e-waste recycling'
+  ],
+  path: '/services/e-waste'
+})
 
 export default function EWastePage() {
   const { t } = useTranslation('common')
@@ -80,8 +98,22 @@ export default function EWastePage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'E-Waste Management Services',
+    description: 'Professional e-waste management and electronic waste recycling including secure data destruction, certified disposal, compliance reporting, and environmental responsibility for businesses in Japan.',
+    serviceType: 'E-Waste Management Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.eWaste.title')}
         subtitle={t('servicePages.eWaste.subtitle')}
@@ -182,6 +214,7 @@ export default function EWastePage() {
         ctaText={t('servicePages.eWaste.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

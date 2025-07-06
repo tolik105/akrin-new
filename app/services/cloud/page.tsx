@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Cloud, Server, Database, FolderSyncIcon as Sync, Lock, BarChart, TrendingUp, Shield, Zap } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'Cloud Services Japan | Cloud Migration & Management | Akrin',
+  description: 'Comprehensive cloud services in Japan including cloud migration, hybrid cloud solutions, cloud storage, disaster recovery, and cloud security. Transform your business with cloud technology.',
+  keywords: [
+    'cloud services Japan',
+    'cloud migration Tokyo',
+    'hybrid cloud solutions',
+    'cloud storage Japan',
+    'disaster recovery cloud',
+    'cloud security services',
+    'cloud optimization Japan',
+    'AWS services Tokyo',
+    'Azure cloud Japan',
+    'cloud consulting services'
+  ],
+  path: '/services/cloud'
+})
 
 export default function CloudServicesPage() {
   const { t } = useTranslation('common')
@@ -61,8 +79,22 @@ export default function CloudServicesPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'Cloud Services',
+    description: 'Comprehensive cloud services including cloud migration, hybrid cloud solutions, cloud storage, disaster recovery, and cloud security for businesses in Japan.',
+    serviceType: 'Cloud Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.cloudServices.title')}
         subtitle={t('servicePages.cloudServices.subtitle')}
@@ -137,6 +169,7 @@ export default function CloudServicesPage() {
         ctaText={t('servicePages.cloudServices.cta.button')}
         variant="gradient"
       />
-    </main>
+      </main>
+    </>
   )
 }

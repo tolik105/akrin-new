@@ -1,5 +1,5 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
@@ -23,6 +23,24 @@ import {
   Lock,
 } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'IT Support Services Japan | Technical Support & Maintenance | Akrin',
+  description: 'Comprehensive IT support services in Japan including onsite support, network maintenance, hardware support, system migrations, and technical consulting. Expert IT assistance when you need it.',
+  keywords: [
+    'IT support Japan',
+    'technical support Tokyo',
+    'onsite IT support',
+    'network maintenance Japan',
+    'hardware support services',
+    'system migrations Japan',
+    'IT consulting Tokyo',
+    'computer support services',
+    'enterprise IT support',
+    'IT maintenance Japan'
+  ],
+  path: '/services/it-support'
+})
 
 export default function ITSupportServicesPage() {
   const { t } = useTranslation('common')
@@ -110,8 +128,22 @@ export default function ITSupportServicesPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'IT Support Services',
+    description: 'Comprehensive IT support services including onsite support, network maintenance, hardware support, system migrations, and technical consulting for businesses in Japan.',
+    serviceType: 'IT Support Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.itSupport.title')}
         subtitle={t('servicePages.itSupport.subtitle')}
@@ -155,6 +187,7 @@ export default function ITSupportServicesPage() {
         ctaText={t('servicePages.itSupport.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

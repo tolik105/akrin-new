@@ -1,5 +1,5 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
@@ -22,6 +22,24 @@ import {
   Settings,
 } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'IT Recruitment Japan | Technical Talent Acquisition & Hiring | Akrin',
+  description: 'Professional IT recruitment services in Japan including candidate sourcing, technical assessment, team building, executive search, and talent acquisition. Find top IT professionals.',
+  keywords: [
+    'IT recruitment Japan',
+    'technical recruitment Tokyo',
+    'IT talent acquisition',
+    'software developer recruitment',
+    'IT executive search Japan',
+    'technical hiring Tokyo',
+    'IT staffing recruitment',
+    'technology talent Japan',
+    'IT headhunting Tokyo',
+    'technical team building'
+  ],
+  path: '/services/recruitment'
+})
 
 export default function RecruitmentServicesPage() {
   const { t } = useTranslation('common')
@@ -110,8 +128,22 @@ export default function RecruitmentServicesPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'IT Recruitment Services',
+    description: 'Professional IT recruitment services including candidate sourcing, technical assessment, team building, executive search, and talent acquisition for businesses in Japan.',
+    serviceType: 'IT Recruitment Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.recruitment.title')}
         subtitle={t('servicePages.recruitment.subtitle')}
@@ -209,6 +241,7 @@ export default function RecruitmentServicesPage() {
         ctaText={t('servicePages.recruitment.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

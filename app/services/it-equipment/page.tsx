@@ -1,11 +1,29 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
 import { motion } from "framer-motion"
 import { Laptop, Printer, Server, Wifi, HardDrive, ShieldCheck, Headphones, Settings, Award, Zap, Users } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'IT Equipment Japan | Computer Hardware & Technology Solutions | Akrin',
+  description: 'Professional IT equipment procurement and management in Japan including computers, servers, networking equipment, printers, and technology solutions. Quality hardware with expert support.',
+  keywords: [
+    'IT equipment Japan',
+    'computer hardware Tokyo',
+    'server procurement Japan',
+    'networking equipment Tokyo',
+    'IT hardware solutions',
+    'computer procurement Japan',
+    'technology equipment Tokyo',
+    'IT equipment leasing Japan',
+    'hardware warranty management',
+    'enterprise IT equipment'
+  ],
+  path: '/services/it-equipment'
+})
 
 export default function ITEquipmentPage() {
   const { t } = useTranslation('common')
@@ -74,8 +92,22 @@ export default function ITEquipmentPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'IT Equipment Services',
+    description: 'Professional IT equipment procurement and management including computers, servers, networking equipment, printers, and technology solutions for businesses in Japan.',
+    serviceType: 'IT Equipment Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.itEquipment.title')}
         subtitle={t('servicePages.itEquipment.subtitle')}
@@ -173,6 +205,7 @@ export default function ITEquipmentPage() {
         ctaText={t('servicePages.itEquipment.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }

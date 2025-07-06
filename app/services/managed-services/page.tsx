@@ -1,5 +1,5 @@
-"use client"
-
+import { Metadata } from 'next'
+import { generateMetadata, generateServiceSchema } from '@/lib/seo'
 import { ServiceHero } from "@/components/service-hero"
 import { ServiceFeatureCard } from "@/components/service-feature-card"
 import { ServiceCTASection } from "@/components/service-cta-section"
@@ -19,6 +19,24 @@ import {
   Briefcase,
 } from "lucide-react"
 import { useTranslation } from "react-i18next"
+
+export const metadata: Metadata = generateMetadata({
+  title: 'Managed IT Services Japan | 24/7 Support & Monitoring | Akrin',
+  description: 'Comprehensive managed IT services in Japan with 24/7 monitoring, proactive support, and expert technical assistance. Reduce costs and improve efficiency with Akrin\'s managed services.',
+  keywords: [
+    'managed IT services Japan',
+    'IT outsourcing Tokyo',
+    '24/7 IT monitoring',
+    'proactive IT support',
+    'IT service desk Japan',
+    'managed services provider',
+    'IT infrastructure management',
+    'remote IT support',
+    'IT helpdesk services',
+    'enterprise IT management'
+  ],
+  path: '/services/managed-services'
+})
 
 export default function ManagedServicesPage() {
   const { t } = useTranslation('common')
@@ -89,8 +107,22 @@ export default function ManagedServicesPage() {
     },
   ]
 
+  const serviceSchema = generateServiceSchema({
+    name: 'Managed IT Services',
+    description: 'Comprehensive managed IT services including 24/7 monitoring, proactive support, service desk, and infrastructure management for businesses in Japan.',
+    serviceType: 'Managed IT Services',
+    areaServed: ['JP', 'Tokyo', 'Osaka', 'Worldwide']
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       <ServiceHero
         title={t('servicePages.managedServices.title')}
         subtitle={t('servicePages.managedServices.subtitle')}
@@ -163,6 +195,7 @@ export default function ManagedServicesPage() {
         ctaText={t('servicePages.managedServices.cta.button')}
         variant="primary"
       />
-    </main>
+      </main>
+    </>
   )
 }
