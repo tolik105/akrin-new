@@ -12,7 +12,7 @@ interface ContactFormData {
 async function verifyRecaptcha(token: string): Promise<boolean> {
   // Skip reCAPTCHA verification if not configured
   const secretKey = process.env.RECAPTCHA_SECRET_KEY
-  if (!secretKey || secretKey === 'your-secret-key') {
+  if (!secretKey || secretKey === 'your-secret-key' || secretKey === '') {
     console.warn('reCAPTCHA verification skipped - not configured')
     return true
   }

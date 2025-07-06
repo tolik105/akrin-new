@@ -14,10 +14,10 @@ export async function POST(request: Request) {
       )
     }
 
-    if (!DEEPL_API_KEY) {
+    if (!DEEPL_API_KEY || DEEPL_API_KEY === '') {
       return NextResponse.json(
-        { error: 'DeepL API key not configured' },
-        { status: 500 }
+        { error: 'Translation service temporarily unavailable' },
+        { status: 503 }
       )
     }
 

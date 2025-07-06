@@ -23,7 +23,7 @@ export function ParticleBackground() {
       speedY: number
     }> = []
 
-    // Create particles
+    // Create particles only once
     for (let i = 0; i < 100; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -34,31 +34,40 @@ export function ParticleBackground() {
       })
     }
 
-    function animate() {
+    let animationId: number
+    let lastTime = 0
+    const targetFPS = 60
+    const frameInterval = 1000 / targetFPS
+
+    function animate(currentTime: number) {
       if (!ctx || !canvas) return
       
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
-      particles.forEach((particle, index) => {
-        particle.x += particle.speedX
-        particle.y += particle.speedY
+      if (currentTime - lastTime >= frameInterval) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
         
-        // Wrap around screen
-        if (particle.x > canvas.width) particle.x = 0
-        if (particle.x < 0) particle.x = canvas.width
-        if (particle.y > canvas.height) particle.y = 0
-        if (particle.y < 0) particle.y = canvas.height
+        particles.forEach((particle) => {
+          particle.x += particle.speedX
+          particle.y += particle.speedY
+          
+          // Wrap around screen
+          if (particle.x > canvas.width) particle.x = 0
+          if (particle.x < 0) particle.x = canvas.width
+          if (particle.y > canvas.height) particle.y = 0
+          if (particle.y < 0) particle.y = canvas.height
+          
+          ctx.fillStyle = 'rgba(147, 51, 234, 0.5)'
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+          ctx.fill()
+        })
         
-        ctx.fillStyle = 'rgba(147, 51, 234, 0.5)'
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-        ctx.fill()
-      })
+        lastTime = currentTime
+      }
       
-      requestAnimationFrame(animate)
+      animationId = requestAnimationFrame(animate)
     }
     
-    animate()
+    animationId = requestAnimationFrame(animate)
 
     const handleResize = () => {
       canvas.width = window.innerWidth
@@ -66,7 +75,13 @@ export function ParticleBackground() {
     }
 
     window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
   }, [])
 
   return (
