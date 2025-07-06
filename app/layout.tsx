@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'YOUR_ACTUAL_GOOGLE_VERIFICATION_CODE', // TODO: Replace with your actual Google Search Console verification code
+    google: 'google-site-verification=akrin-jp-verification-code', // Replace with actual verification code from Google Search Console
     // yandex: 'your-yandex-verification-code', // Uncomment and add if using Yandex
   },
   icons: {

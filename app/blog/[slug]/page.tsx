@@ -12,6 +12,7 @@ import Image from "next/image"
 import { useTranslation } from "react-i18next"
 import { useLanguage } from "@/contexts/language-context"
 import { blogPostsEN, blogPostsJA } from "@/lib/blog-data"
+import { generateArticleSchema } from "@/lib/seo"
 
 // This would typically fetch from an API based on the slug
 const getBlogPost = (slug: string, language: string) => {
@@ -53,8 +54,24 @@ export default function BlogPostPage() {
     }
   }
 
+  const articleSchema = generateArticleSchema({
+    title: post.title,
+    description: post.excerpt,
+    author: post.author,
+    datePublished: post.date,
+    dateModified: post.date,
+    image: post.image || '/og-image.png'
+  })
+
   return (
-    <main className="flex min-h-screen flex-col">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema)
+        }}
+      />
+      <main className="flex min-h-screen flex-col">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-16 pt-28">
         <div className="container max-w-4xl">
@@ -208,6 +225,7 @@ export default function BlogPostPage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   )
 }
